@@ -1,10 +1,11 @@
 const pool = require('../modules/pool');
+const table = 'user';
 
 const user = {
-    signup : async (id, password, name, birth) => {
-        const fields = 'id, password, name, birth';
-        const questions = `?, ?, ?, ?`;
-        const values = [id, password, name, birth];
+    signup : async (id, password, name, profileImg, birth) => {
+        const fields = 'id, password, name, profileImg, birth';
+        const questions = `?, ?, ?, ?, ?`;
+        const values = [id, password, name, profileImg, birth];
         const query = `INSERT INTO user(${fields}) VALUES(${questions})`;
 
         try {
@@ -16,7 +17,6 @@ const user = {
             throw err;
         }
     },
-
 }
 
 module.exports = user;

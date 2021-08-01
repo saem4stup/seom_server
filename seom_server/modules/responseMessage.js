@@ -5,6 +5,8 @@ module.exports = {
     
     //회원가입
     CREATED_USER : "회원가입 성공",
-    ALREADY_ID : "이미 사용중인 아이디입니다."
+    ALREADY_ID : "이미 사용중인 아이디입니다.",
+    UNSUPPORTED_TYPE : "지원되지 않는 사진 형식입니다.",
+    UPDATE_PROFILE_SUCCESS : "프로필 이미지 업데이트 성공",
 
 }
