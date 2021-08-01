@@ -17,6 +17,17 @@ const user = {
             throw err;
         }
     },
+
+    getUserById : async(id) => {
+        const query = `SELECT * FROM ${table} WHERE id = ?`;
+        
+        try {
+            return await pool.queryParamArr(query, [id]);
+        } catch(err) {
+            console.log('getUserById err: ', err);
+            throw err;
+        }
+    }
 }
 
 module.exports = user;

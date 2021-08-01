@@ -9,4 +9,9 @@ module.exports = {
     UNSUPPORTED_TYPE : "지원되지 않는 사진 형식입니다.",
     UPDATE_PROFILE_SUCCESS : "프로필 이미지 업데이트 성공",
 
+    //로그인
+    NO_USER: "존재하지 않는 사용자입니다.",
+    MISS_MATCH_PW: "비밀번호가 일치하지 않습니다.",
+    LOGIN_SUCCESS: "로그인에 성공하였습니다",
+
 }
