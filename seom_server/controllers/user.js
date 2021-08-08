@@ -44,5 +44,21 @@ module.exports = {
         }
         
         return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, {userId: id}));
+    },
+
+    check_id : async(req, res) => {
+        const {id} = req.body;
+
+        if(!id) {
+            return await res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));   
+        }
+
+        const alreadyUserId = await userModel.checkAlreadyUserId(id);
+        console.log(alreadyUserId)
+        if(alreadyUserId) {
+            return await res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.ALREADY_ID, {duplicate : id}));
+        }
+
+        return await res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.NO_DUPLICATE, {duplicate : 'available'}));
     }
 }
