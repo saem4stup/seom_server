@@ -16,4 +16,7 @@ module.exports = {
     MISS_MATCH_PW: "비밀번호가 일치하지 않습니다.",
     LOGIN_SUCCESS: "로그인에 성공하였습니다",
 
+    //메인
+    GET_MAP_INFO_SUCCESS : "메인화면 정보 불러오기 성공",
+
 }
