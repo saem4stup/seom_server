@@ -27,6 +27,23 @@ const user = {
             console.log('getUserById err: ', err);
             throw err;
         }
+    },
+
+    checkAlreadyUserId : async(id) => {
+        const query = `SELECT userIdx FROM ${table} WHERE id = ?`;
+
+        try {
+            const result = await pool.queryParamArr(query, [id]);
+            
+            if(result.length === 0) { //not used id
+                return false;
+            } else { //already used id
+                return true;
+            }
+        } catch(err) {
+            console.log('checkAlreadyUserId err: ', err);
+            throw err;
+        }
     }
 }
 
