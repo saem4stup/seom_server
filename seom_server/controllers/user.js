@@ -6,7 +6,12 @@ const userModel = require('../models/user');
 module.exports = {
     signup : async(req, res) => {
         const {id, password, name, birth} = req.body;
+        console.log('id: ', id);
+        console.log('pw: ', password);
+        console.log('name: ', name);
+        console.log('birth: ', birth);
         const profile = req.files;
+        console.log("img: ", profile);
         const imgLocation = profile.map(profile => profile.location);
         if(!id || !password || !name || !birth || profile === undefined) {
             return await res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
