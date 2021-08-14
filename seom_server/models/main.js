@@ -3,7 +3,7 @@ const pool = require('../modules/pool');
 const main = {
     getMainInfo : async(userIdx) => {
         const nameQuery = `SELECT name FROM user WHERE userIdx = ?`;
-        const deceasedQuery = `		SELECT ild.deceasedName, ild.deceasedProfileImg, IF(usr_ild.userIdx = ild.userIdx, true, false) AS madeByMyself
+        const deceasedQuery = `		SELECT ild.islandIdx, ild.deceasedName, ild.deceasedProfileImg, IF(usr_ild.userIdx = ild.userIdx, true, false) AS madeByMyself
                                     FROM island ild
                                     JOIN user_island usr_ild ON usr_ild.islandIdx = ild.islandIdx 
                                     WHERE usr_ild.userIdx = ?`;
