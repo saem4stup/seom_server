@@ -4,6 +4,7 @@ var router = express.Router();
 const mainController = require('../../controllers/main');
 const upload = require('../../modules/multer');
 
-router.get('/v1/:userIdx', mainController.getMainInfo);
+router.get('/v1/:user_idx', mainController.getMainInfo);
+router.delete('/v1/:user_idx/:island_idx', mainController.deleteIsland);
 
 module.exports = router;

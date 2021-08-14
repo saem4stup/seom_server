@@ -20,6 +20,19 @@ const main = {
             console.log('getMainInfo err: ', err);
             throw err;
         }
+    },
+
+    deleteIsland : async(userIdx, islandIdx) => {
+        const query = `DELETE FROM user_island
+                    WHERE user_island.userIdx = ${userIdx} AND user_island.islandIdx = ${islandIdx}`;
+        
+        try {
+            let result = await pool.queryParam(query);
+            return result;
+        } catch(err) {
+            console.log('deleteIsland err: ', err);
+            throw err;
+        }
     }
 }
 
