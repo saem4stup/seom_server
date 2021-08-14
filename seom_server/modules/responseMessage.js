@@ -19,7 +19,9 @@ module.exports = {
     //메인
     GET_MAP_INFO_SUCCESS : "메인화면 정보 불러오기 성공",
     DELETE_ISLAND_FAIL : "섬 삭제하기 실패",
-    DELETE_ISLAND_SUCCESS : "섬 삭제하기 성공"
+    DELETE_ISLAND_SUCCESS : "섬 삭제하기 성공",
+    ADD_ISLAND_FAIL : "섬 추가하기 실패",
+    ADD_ISLAND_SUCCESS : "섬 추가하기 성공"
 
 
 }
