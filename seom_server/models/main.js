@@ -63,7 +63,7 @@ const main = {
     searchIsland : async(deceasedName) => {
         const queryWords = deceasedName.replace(/(\s)/g, "%");
 
-        const query = `SELECT ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, usr.id, ild.likes
+        const query = `SELECT ild.islandIdx, ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, usr.id, ild.likes
                         FROM island ild
                         JOIN user usr ON ild.userIdx = usr.userIdx
                         WHERE ild.deceasedName = "${deceasedName}"
@@ -71,7 +71,6 @@ const main = {
 
         try {
             let result = await pool.queryParam(query);
-            console.log(result);
             return result;
         } catch(err) {
             console.log('searchIsland err: ', err);
