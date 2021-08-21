@@ -47,5 +47,21 @@ module.exports = {
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.ADD_ISLAND_FAIL));
         }
         return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.ADD_ISLAND_SUCCESS, {addIslandIdx : result}));        
+    },
+
+    searchIsland : async(req, res) => {
+        let deceasedName = req.query.deceased_name;
+
+        if(!deceasedName) {
+            return await res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
+        } 
+
+        const result = await mainModel.searchIsland(deceasedName);
+        
+        if(result.length === 0) {
+            return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.NO_RESULT_SEARCH_ISLAND));
+        }
+        
+        return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SEARCH_ISLAND_SUCCESS, result));
     }
 }

@@ -58,6 +58,25 @@ const main = {
             console.log('addIsland err: ', err);
             throw err;
         }
+    },
+
+    searchIsland : async(deceasedName) => {
+        const queryWords = deceasedName.replace(/(\s)/g, "%");
+
+        const query = `SELECT ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, usr.id, ild.likes
+                        FROM island ild
+                        JOIN user usr ON ild.userIdx = usr.userIdx
+                        WHERE ild.deceasedName = "${deceasedName}"
+                        ORDER BY ild.likes DESC`;
+
+        try {
+            let result = await pool.queryParam(query);
+            console.log(result);
+            return result;
+        } catch(err) {
+            console.log('searchIsland err: ', err);
+            throw err;
+        }
     }
 }
 

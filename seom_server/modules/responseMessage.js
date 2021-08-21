@@ -21,7 +21,10 @@ module.exports = {
     DELETE_ISLAND_FAIL : "섬 삭제하기 실패",
     DELETE_ISLAND_SUCCESS : "섬 삭제하기 성공",
     ADD_ISLAND_FAIL : "섬 추가하기 실패",
-    ADD_ISLAND_SUCCESS : "섬 추가하기 성공"
+    ADD_ISLAND_SUCCESS : "섬 추가하기 성공",
+    SEARCH_ISLAND_SUCCESS : "섬 검색하기 성공",
+    SEARCH_ISLAND_FAIL : "섬 검색하기 실패",
+    NO_RESULT_SEARCH_ISLAND : "섬 검색 결과가 없습니다."
 
 
 }
