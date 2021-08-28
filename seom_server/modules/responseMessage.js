@@ -24,7 +24,11 @@ module.exports = {
     ADD_ISLAND_SUCCESS : "섬 추가하기 성공",
     SEARCH_ISLAND_SUCCESS : "섬 검색하기 성공",
     SEARCH_ISLAND_FAIL : "섬 검색하기 실패",
-    NO_RESULT_SEARCH_ISLAND : "섬 검색 결과가 없습니다."
+    NO_RESULT_SEARCH_ISLAND : "섬 검색 결과가 없습니다.",
+
+    //기억
+    GET_MEMORY_SUCCESS: "기억목록 불러오기 성공",
+    GET_MEMORY_FAIL : "존재하지 않는 island입니다."
 
 
 }

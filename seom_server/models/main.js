@@ -45,8 +45,11 @@ const main = {
             let result = await pool.queryParamArr(query, values);
             
             let islandIdx = result.insertId;
-            const query2 = `INSERT INTO user_island(userIdx, islandIdx) VALUES(${userIdx}, ${islandIdx})`;
-            await pool.queryParam(query2);
+            const insertUserIsland = `INSERT INTO user_island(userIdx, islandIdx) VALUES(${userIdx}, ${islandIdx})`;
+            const insertBookmark = `INSERT INTO bookmark(userIdx, islandIdx) VALUES(${userIdx}, ${islandIdx})`;
+
+            await pool.queryParam(insertUserIsland);
+            await pool.queryParam(insertBookmark);
             
             const resultQuery = `	SELECT islandIdx, deceasedName, deceasedBirth, deceasedDeath, deceasedProfileImg, userIdx, likes, relation, date_format(createDate, '%Y.%m.%d') as createDate
                                     FROM island
