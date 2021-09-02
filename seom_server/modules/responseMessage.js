@@ -28,7 +28,9 @@ module.exports = {
 
     //기억
     GET_MEMORY_SUCCESS: "기억목록 불러오기 성공",
-    GET_MEMORY_FAIL : "존재하지 않는 island입니다."
+    GET_MEMORY_FAIL : "존재하지 않는 island입니다.",
+    ADD_CONTENTS_SUCCESS : "컨텐츠 저장하기 성공",
+    ADD_CONTENTS_FAIL : "컨텐츠 저장하기 실패"
 
 
 }

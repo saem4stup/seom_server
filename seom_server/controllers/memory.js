@@ -2,6 +2,7 @@ const util = require('../modules/util');
 const resMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const memoryModel = require('../models/memory');
+const memory = require('../models/memory');
 
 module.exports = {
     getMemories : async(req, res) => {
@@ -18,5 +19,22 @@ module.exports = {
         }
 
         return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.GET_MEMORY_SUCCESS, result));
+    },
+
+    addMemory : async(req, res) => {
+        let memoryImage = req.files;
+        let {userIdx, islandIdx, memo} = req.body;
+
+        if((!memoryImage && !memo) || (!userIdx || !islandIdx)) {
+            return await res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));   
+        }
+
+        let imgLocation = "default";
+        if(memoryImage.length !== 0) {
+            imgLocation = memoryImage.map(image => image.location);   
+        }
+
+        let result = await memoryModel.addMemory(imgLocation, userIdx,islandIdx, memo);
+        return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.ADD_CONTENTS_SUCCESS, result));
     }
 }
