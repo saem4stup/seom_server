@@ -31,6 +31,11 @@ module.exports = {
 
         let imgLocation = "default";
         if(memoryImage.length !== 0) {
+            let type = req.files[0].mimetype.split('/')[1];
+            if(type !== 'jpeg' && type !== 'jpg' && type !== 'png') {
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.UNSUPPORTED_TYPE));
+            }
+            
             imgLocation = memoryImage.map(image => image.location);   
         }
 
