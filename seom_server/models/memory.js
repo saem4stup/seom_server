@@ -65,9 +65,10 @@ const memory = {
     },
 
     getContents : async(userIdx, contentsIdx) => {
-        let selectContentsQuery = `SELECT contentsIdx, contentsImg, likes, date_format(timestamp, '%Y.%m.%d') AS createDate, commentCount, memo
-                                    FROM contents
-                                    WHERE contentsIdx = ${contentsIdx}`;
+        let selectContentsQuery = ` SELECT cnt.contentsIdx, cnt.contentsImg, date_format(cnt.timestamp, '%Y.%m.%d') AS createDate, cnt.memo, count(usr_cnt_lik.contentsIdx) AS likes
+                                    FROM contents cnt
+                                    JOIN user_contents_like usr_cnt_lik ON cnt.contentsIdx = usr_cnt_lik.contentsIdx
+                                    WHERE cnt.contentsIdx = ${contentsIdx}`;
         
         try {
             let selectContentsResult = await pool.queryParam(selectContentsQuery);
