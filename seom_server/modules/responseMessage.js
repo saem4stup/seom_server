@@ -30,7 +30,10 @@ module.exports = {
     GET_MEMORY_SUCCESS: "기억목록 불러오기 성공",
     GET_MEMORY_FAIL : "존재하지 않는 island입니다.",
     ADD_CONTENTS_SUCCESS : "컨텐츠 저장하기 성공",
-    ADD_CONTENTS_FAIL : "컨텐츠 저장하기 실패"
+    ADD_CONTENTS_FAIL : "컨텐츠 저장하기 실패",
+    GET_CONTENTS_INFO_SUCCESS : "컨텐츠 정보 불러오기 성공",
+    GET_CONTENTS_INFO_FAIL : "컨텐츠 정보 불러오기 실패",
+    NOT_EXIST_CONTENTS : "존재하지 않는 컨텐츠입니다."
 
 
 }

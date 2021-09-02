@@ -62,6 +62,20 @@ const memory = {
             console.log('addMemory err: ', err);
             throw err;
         }
+    },
+
+    getContents : async(userIdx, contentsIdx) => {
+        let selectContentsQuery = `SELECT contentsIdx, contentsImg, likes, date_format(timestamp, '%Y.%m.%d') AS createDate, commentCount, memo
+                                    FROM contents
+                                    WHERE contentsIdx = ${contentsIdx}`;
+        
+        try {
+            let selectContentsResult = await pool.queryParam(selectContentsQuery);
+            return selectContentsResult;
+        } catch(err) {
+            console.log('getContents err : ', err);
+            throw err;
+        }
     }
 
 }
