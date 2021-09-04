@@ -8,5 +8,6 @@ const upload = require('../../modules/multer');
 router.get('/v1/memories/:user_idx/:island_idx', memoryController.getMemories);
 router.post('/v1/memories', upload.array('memoryImage',1), memoryController.addMemory);
 router.get('/v1/contents/:user_idx/:contents_idx', memoryController.getContents);
+router.put('/v1/contents/likes/:user_idx/:contents_idx', memoryController.likeContents);
 
 module.exports = router;

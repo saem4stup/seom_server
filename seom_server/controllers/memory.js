@@ -56,5 +56,39 @@ module.exports = {
             return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.NOT_EXIST_CONTENTS));
         }
         return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.GET_CONTENTS_INFO_SUCCESS, result));
+    },
+
+    likeContents : async(req, res) => {
+        let userIdx = req.params.user_idx;
+        let contentsIdx = req.params.contents_idx;
+        
+        if(!userIdx || !contentsIdx) {
+            return await res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));   
+        }
+
+        function Func1() {
+            let isLike = memoryModel.isLike(userIdx, contentsIdx);
+            return isLike;
+        };
+
+        let data;
+        let result = {};
+
+        async function Func2(isLike) {
+            if(!isLike) {
+                data = await memoryModel.deleteLike(userIdx, contentsIdx);
+            } else {
+                data = await memoryModel.addLike(userIdx, contentsIdx);
+            }
+
+            result.isLike = isLike;
+            result.likes = data[0].likes;
+
+            return result;
+        };
+
+        await Func1(async(elem) => {}).then((res) => Func2(res));
+
+        return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.CONTENTS_LIKES_SUCCESS, result));
     }
 }

@@ -77,7 +77,55 @@ const memory = {
             console.log('getContents err : ', err);
             throw err;
         }
-    }
+    },
+
+    isLike : async(userIdx, contentsIdx) => {
+        let query = `SELECT COUNT(*) as cnt FROM user_contents_like WHERE userIdx = ${userIdx} and contentsIdx = ${contentsIdx}`;
+        try{
+            const result = await pool.queryParam(query);
+            if(result[0].cnt === 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch(err){
+            console.log('isLike err: ', err);
+        }throw err;
+    },
+
+    deleteLike : async(userIdx, contentsIdx) =>{
+        let query1 = `DELETE FROM user_contents_like WHERE userIdx = ${userIdx} and contentsIdx = ${contentsIdx}`;
+        let query2 = `UPDATE contents SET likes = likes-1 WHERE contentsIdx = ${contentsIdx}`;
+        let query3 = `SELECT likes FROM contents WHERE contentsIdx = ${contentsIdx}`;
+        try{
+            let result1 = await pool.queryParam(query1);
+            let result2 = await pool.queryParam(query2);
+            let result3 = await pool.queryParam(query3);
+            return result3;
+        }catch(err){
+            console.log('deleteLike err: ', err);
+        }throw err;
+    },
+
+    addLike : async(userIdx, contentsIdx) =>{
+        const fields = `userIdx, contentsIdx`;
+        const question = `?,?`;
+        const values = [userIdx, contentsIdx];
+
+        let query1 = `INSERT INTO user_contents_like(${fields}) VALUES(${question})`;
+        let query2 = `UPDATE contents SET likes = likes+1 WHERE contentsIdx = ${contentsIdx}`;
+        let query3 = `SELECT likes FROM contents WHERE contentsIdx = ${contentsIdx}`;
+        try{
+            const result1 = await pool.queryParamArr(query1, values);
+            const result2 = await pool.queryParam(query2);
+            const result3 = await pool.queryParam(query3);
+            return result3;
+        }catch(err){
+            console.log('addLike err: ', err);
+        }throw err;
+    },
+
 
 }
 
