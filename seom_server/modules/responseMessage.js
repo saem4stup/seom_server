@@ -33,7 +33,7 @@ module.exports = {
     ADD_CONTENTS_FAIL : "컨텐츠 저장하기 실패",
     GET_CONTENTS_INFO_SUCCESS : "컨텐츠 정보 불러오기 성공",
     GET_CONTENTS_INFO_FAIL : "컨텐츠 정보 불러오기 실패",
-    NOT_EXIST_CONTENTS : "존재하지 않는 컨텐츠입니다."
-
+    NOT_EXIST_CONTENTS : "존재하지 않는 컨텐츠입니다.",
+    CONTENTS_LIKES_SUCCESS : "컨텐츠 좋아요 토글 성공",
 
 }
