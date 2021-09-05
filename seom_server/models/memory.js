@@ -72,6 +72,20 @@ const memory = {
         
         try {
             let selectContentsResult = await pool.queryParam(selectContentsQuery);
+            await Promise.all(selectContentsResult.map(async(element) => {
+                let isAlreadyLikesQuery = `SELECT IF(COUNT(user_contents_like.contentsIdx) > 0, true, false) AS isAlreadyLikes
+                                            FROM user_contents_like
+                                            WHERE user_contents_like.userIdx = ${userIdx} AND user_contents_like.contentsIdx = ${contentsIdx}`;
+                let isAlreadyLikesResult = await pool.queryParam(isAlreadyLikesQuery);
+
+                if(isAlreadyLikesResult[0].isAlreadyLikes === 1) {
+                    element.isAlreadyLikes = true;
+                } else {
+                    element.isAlreadyLikes = false;
+
+                }
+            }));
+
             return selectContentsResult;
         } catch(err) {
             console.log('getContents err : ', err);
