@@ -3,7 +3,7 @@ const pool = require('../modules/pool');
 
 const memory = {
     getMemories : async(userIdx, islandIdx) => {
-        let getIslandInfo = `SELECT ild.islandIdx, ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, ild.likes
+        let getIslandInfo = `SELECT ild.islandIdx, ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, ild.bookmark
                             FROM island ild
                             WHERE ild.islandIdx = ${islandIdx}`;
         let getContents = `SELECT contentsIdx, contentsImg, likes, date_format(timestamp, '%Y/%m/%d') AS createDate, commentCount
@@ -124,9 +124,7 @@ const memory = {
         }catch(err){
             console.log('addLike err: ', err);
         }throw err;
-    },
-
-
+    }
 }
 
 module.exports = memory;

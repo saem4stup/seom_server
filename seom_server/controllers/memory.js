@@ -90,5 +90,5 @@ module.exports = {
         await Func1(async(elem) => {}).then((res) => Func2(res));
 
         return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.CONTENTS_LIKES_SUCCESS, result));
-    }
+    },
 }

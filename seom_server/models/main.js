@@ -51,7 +51,7 @@ const main = {
             await pool.queryParam(insertUserIsland);
             await pool.queryParam(insertBookmark);
             
-            const resultQuery = `	SELECT islandIdx, deceasedName, deceasedBirth, deceasedDeath, deceasedProfileImg, userIdx, likes, relation, date_format(createDate, '%Y.%m.%d') as createDate
+            const resultQuery = `	SELECT islandIdx, deceasedName, deceasedBirth, deceasedDeath, deceasedProfileImg, userIdx, bookmark, relation, date_format(createDate, '%Y.%m.%d') as createDate
                                     FROM island
                                     WHERE islandIdx = ?`;
             
@@ -66,11 +66,11 @@ const main = {
     searchIsland : async(deceasedName) => {
         const queryWords = deceasedName.replace(/(\s)/g, "%");
 
-        const query = `SELECT ild.islandIdx, ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, usr.id, ild.likes
+        const query = `SELECT ild.islandIdx, ild.deceasedProfileImg, ild.deceasedName, ild.deceasedBirth, ild.deceasedDeath, usr.id, ild.bookmark
                         FROM island ild
                         JOIN user usr ON ild.userIdx = usr.userIdx
                         WHERE ild.deceasedName = "${deceasedName}"
-                        ORDER BY ild.likes DESC`;
+                        ORDER BY ild.bookmark DESC`;
 
         try {
             let result = await pool.queryParam(query);
@@ -79,7 +79,54 @@ const main = {
             console.log('searchIsland err: ', err);
             throw err;
         }
-    }
+    },
+
+    isBookmark : async(userIdx, islandIdx) => {
+        let query = `SELECT COUNT(*) as cnt FROM bookmark WHERE userIdx = ${userIdx} and islandIdx = ${islandIdx}`;
+        try{
+            const result = await pool.queryParam(query);
+            if(result[0].cnt === 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch(err){
+            console.log('isBookmark err: ', err);
+        }throw err;
+    },
+
+    addBookmark : async(userIdx, islandIdx) => {
+        const fields = `userIdx, islandIdx`;
+        const question = `?,?`;
+        const values = [userIdx, islandIdx];
+
+        let query1 = `INSERT INTO bookmark(${fields}) VALUES(${question})`;
+        let query2 = `UPDATE island SET bookmark = bookmark+1 WHERE islandIdx = ${islandIdx}`;
+        let query3 = `SELECT bookmark AS bookmarkCount FROM island WHERE islandIdx = ${islandIdx}`;
+        try{
+            const result1 = await pool.queryParamArr(query1, values);
+            const result2 = await pool.queryParam(query2);
+            const result3 = await pool.queryParam(query3);
+            return result3;
+        }catch(err){
+            console.log('addBookmark err: ', err);
+        }throw err;
+    },
+
+    deleteBookmark : async(userIdx, islandIdx) =>{
+        let query1 = `DELETE FROM bookmark WHERE userIdx = ${userIdx} and islandIdx = ${islandIdx}`;
+        let query2 = `UPDATE island SET bookmark = bookmark-1 WHERE islandIdx = ${islandIdx}`;
+        let query3 = `SELECT bookmark AS bookmarkCount FROM island WHERE islandIdx = ${islandIdx}`;
+        try{
+            let result1 = await pool.queryParam(query1);
+            let result2 = await pool.queryParam(query2);
+            let result3 = await pool.queryParam(query3);
+            return result3;
+        }catch(err){
+            console.log('deleteBookmark err: ', err);
+        }throw err;
+    },
 }
 
 module.exports = main;

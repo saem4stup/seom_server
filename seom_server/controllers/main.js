@@ -63,5 +63,39 @@ module.exports = {
         }
         
         return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SEARCH_ISLAND_SUCCESS, result));
+    },
+
+    bookmarkIsland : async(req, res) => {
+        let userIdx = req.params.user_idx;
+        let islandIdx = req.params.island_idx;
+        
+        if(!userIdx || !islandIdx) {
+            return await res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));   
+        }
+
+        function Func1() {
+            let isBookmark = mainModel.isBookmark(userIdx, islandIdx);
+            return isBookmark;
+        };
+
+        let data;
+        let result = {};
+
+        async function Func2(isBookmark) {
+            if(!isBookmark) {
+                data = await mainModel.deleteBookmark(userIdx, islandIdx);
+            } else {
+                data = await mainModel.addBookmark(userIdx, islandIdx);
+            }
+
+            result.isBookmark = isBookmark;
+            result.bookmarkCount = data[0].bookmarkCount;
+
+            return result;
+        };
+
+        await Func1(async(elem) => {}).then((res) => Func2(res));
+
+        return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.ISLAND_BOOKMARK_SUCCESS, result));
     }
 }
