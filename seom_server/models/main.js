@@ -3,15 +3,25 @@ const pool = require('../modules/pool');
 const main = {
     getMainInfo : async(userIdx) => {
         const nameQuery = `SELECT name FROM user WHERE userIdx = ?`;
-        const deceasedQuery = `		SELECT ild.islandIdx, ild.deceasedName, ild.deceasedProfileImg, IF(usr_ild.userIdx = ild.userIdx, true, false) AS madeByMyself
-                                    FROM island ild
-                                    JOIN user_island usr_ild ON usr_ild.islandIdx = ild.islandIdx 
-                                    WHERE usr_ild.userIdx = ?`;
+        const deceasedQuery = `	SELECT ild.islandIdx, ild.deceasedName, ild.deceasedProfileImg
+                                FROM island ild
+                                JOIN bookmark bm ON ild.islandIdx = bm.islandIdx 
+                                WHERE bm.userIdx = ?`;
         
         try {
             let result = {};
             let nameResult = await pool.queryParamArr(nameQuery, [userIdx]);
             let deceasedResult = await pool.queryParamArr(deceasedQuery, [userIdx]);
+
+            await Promise.all(deceasedResult.map(async(element) => {
+                let islandIdx = element.islandIdx;
+                let isMyIsland = `SELECT IF(COUNT(usr_ild.islandIdx) > 0, true, false) AS madeByMyself
+                                    FROM user_island usr_ild
+                                    WHERE usr_ild.islandIdx = ${islandIdx} AND usr_ild.userIdx = ${userIdx}`;
+                let isMyIslandResult = await pool.queryParam(isMyIsland);
+                
+                element.madeByMyself = isMyIslandResult[0].madeByMyself;
+            }));
 
             result.name = nameResult[0].name;
             result.deceasedInfo = deceasedResult;
